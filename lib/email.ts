@@ -162,7 +162,8 @@ export async function sendConsultationEmail(data: ConsultationEmailData) {
             <tr style="border-top: 1px solid #ebedf0;">
               <td style="padding-top: 20px; font-size: 14px; color: #8b95a1;">신청 시각</td>
               <td style="padding-top: 20px; font-size: 14px; color: #8b95a1; text-align: right;">${new Date().toLocaleString(
-                "ko-KR"
+                "ko-KR",
+                { timeZone: "Asia/Seoul" }
               )}</td>
             </tr>
           </table>
@@ -192,7 +193,7 @@ export async function sendConsultationEmail(data: ConsultationEmailData) {
 이름(회사명): ${data.name}
 연락처: ${data.contact}
 유입 경로: ${data.click_source || "바로기업 홈페이지"}
-신청 시간: ${new Date().toLocaleString("ko-KR")}
+신청 시간: ${new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}
     `;
 
     // 이메일 전송
@@ -230,7 +231,7 @@ export async function sendConsultationEmail(data: ConsultationEmailData) {
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error("[EMAIL] ❌ 메일 전송 실패! - catch 블록 진입");
-    console.error("[EMAIL] 에러 발생 시각:", new Date().toISOString());
+    console.error("[EMAIL] 에러 발생 시각:", new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" }));
     console.error("[EMAIL] 에러 타입:", error?.constructor?.name);
     console.error(
       "[EMAIL] 에러 메시지:",
