@@ -484,7 +484,7 @@ export default function Home() {
       <div className={styles.check_section}>
         <div className={styles.check_background}></div>
         <div className={styles.check_content_wrapper}>
-          <p className={styles.check_text}>아래 해당하시는 분들은 상담이 어렵습니다</p>
+          <p className={styles.check_text}>아래 해당하시는 분들은 꼭 상담 받아보세요</p>
           <div className={styles.check_button}>상담 전 필수 체크리스트</div>
           <div className={styles.check_images}>
             <img 
