@@ -192,6 +192,7 @@ export default function Home() {
     const sourceMap: { [key: string]: string } = {
       daangn: "당근",
       insta: "인스타",
+      facebook: "페이스북",
     };
 
     const shortSource = sourceMap[utmSource] || utmSource;
