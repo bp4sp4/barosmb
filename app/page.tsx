@@ -202,6 +202,22 @@ export default function Home() {
     return koreanSource;
   };
 
+  // check.gif 이미지 미리 로드 (신청 완료 모달이 즉시 표시되도록)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // link 태그로 프리로드
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.href = "/check.gif";
+      link.as = "image";
+      document.head.appendChild(link);
+
+      // Image 객체로도 미리 로드 (이중 보장)
+      const img = new window.Image();
+      img.src = "/check.gif";
+    }
+  }, []);
+
   // URL 파라미터에서 utm_source 읽어서 clickSource 설정
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -751,6 +767,7 @@ export default function Home() {
                 className={styles.completed_modal_image}
                 loading="eager"
                 decoding="async"
+                fetchPriority="high"
               />
               <h2 className={styles.completed_modal_title}>
                 신청이 완료되었습니다
