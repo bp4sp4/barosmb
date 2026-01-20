@@ -1630,7 +1630,7 @@
 }
 
 /* 376px 이상에서 뾰족이 숨김 */
-@media (min-width: 376px) {
+@media (max-width: 376px) {
   .container {
     padding-bottom: 0;
   }
