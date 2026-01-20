@@ -193,6 +193,8 @@ export default function Home() {
       daangn: "당근",
       insta: "인스타",
       facebook: "페이스북",
+      google: "구글",
+      youtube: "유튜브",
     };
 
     const shortSource = sourceMap[utmSource] || utmSource;
