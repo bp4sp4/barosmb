@@ -46,6 +46,17 @@ export default function Home() {
   const reviewImage3Ref = useRef<HTMLDivElement>(null);
   const reviewImage4Ref = useRef<HTMLDivElement>(null);
   const reviewImage5Ref = useRef<HTMLDivElement>(null);
+  const headerImage1Ref = useRef<HTMLImageElement>(null);
+  const headerImage2Ref = useRef<HTMLImageElement>(null);
+  const headerImage3Ref = useRef<HTMLImageElement>(null);
+  const infomationSectionRef = useRef<HTMLDivElement>(null);
+  const contents004SectionRef = useRef<HTMLDivElement>(null);
+  const consultImage1Ref = useRef<HTMLImageElement>(null);
+  const consultImage2Ref = useRef<HTMLImageElement>(null);
+  const donworryImage1Ref = useRef<HTMLImageElement>(null);
+  const donworryImage2Ref = useRef<HTMLImageElement>(null);
+  const donworryImage3Ref = useRef<HTMLImageElement>(null);
+  const footerSubtitleRef = useRef<HTMLParagraphElement>(null);
 
   // 연락처 포맷팅 함수 (010-XXXX-XXXX)
   const formatPhoneNumber = (value: string) => {
@@ -173,54 +184,6 @@ export default function Home() {
     }
   };
 
-  // Check.gif 이미지 미리 로드 (신청 완료 모달이 즉시 표시되도록)
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // link 태그로 프리로드
-      const link = document.createElement("link");
-      link.rel = "preload";
-      link.href = "/check.gif";
-      link.as = "image";
-      document.head.appendChild(link);
-
-      // Image 객체로도 미리 로드 (이중 보장)
-      const img = document.createElement("img");
-      img.src = "/check.gif";
-    }
-  }, []);
-
-  // 메인 이미지와 코인 이미지 미리 로드
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // 메인 이미지 preload
-      const mainLink = document.createElement("link");
-      mainLink.rel = "preload";
-      mainLink.href = "/main.gif";
-      mainLink.as = "image";
-      document.head.appendChild(mainLink);
-
-      // 코인 이미지들 preload
-      const leftCoinLink = document.createElement("link");
-      leftCoinLink.rel = "preload";
-      leftCoinLink.href = "/left_coin.png";
-      leftCoinLink.as = "image";
-      document.head.appendChild(leftCoinLink);
-
-      const rightCoinLink = document.createElement("link");
-      rightCoinLink.rel = "preload";
-      rightCoinLink.href = "/right_coin.png";
-      rightCoinLink.as = "image";
-      document.head.appendChild(rightCoinLink);
-
-      // 메인 이미지 로드 완료 감지
-      const mainImg = document.createElement("img");
-      mainImg.onload = () => {
-        setMainImageLoaded(true);
-      };
-      mainImg.src = "/main.gif";
-    }
-  }, []);
-
   // utm_source를 한글 형식으로 변환
   const formatClickSource = (
     utmSource: string,
@@ -329,8 +292,19 @@ export default function Home() {
 
     // 각 섹션 관찰
     const sections = [
+      headerImage1Ref.current,
+      headerImage2Ref.current,
+      headerImage3Ref.current,
       contentsSectionRef.current,
+      infomationSectionRef.current,
       content005SectionRef.current,
+      contents004SectionRef.current,
+      consultImage1Ref.current,
+      consultImage2Ref.current,
+      donworryImage1Ref.current,
+      donworryImage2Ref.current,
+      donworryImage3Ref.current,
+      footerSubtitleRef.current,
       consultSectionRef.current,
       newSectionRef.current,
       contentsCard1Ref.current,
@@ -431,97 +405,66 @@ export default function Home() {
           </div>
         )}
       </div>
-      <div ref={contentRef} className={styles.content}>
-        <Image
-          src="/main.png"
-          alt="main animation"
-          width={521}
-          height={375}
-          className={styles.main_gif}
-          unoptimized={true}
-          priority
-          onLoad={() => setMainImageLoaded(true)}
-        />
-        {mainImageLoaded && (
-          <>
+      <div className={styles.container}>
+        {/* 배경 이미지를 별도 태그로 배치 */}
+        <img src="/headerbackground.png" className={styles.abs_bg} alt="background" />
+        
+        <div ref={contentRef} className={styles.content}>
+          <div className={styles.contents_text_wrapper}>
+            <p className={styles.contents_subtitle_text}>
+              저금리 높은 한도 사업자들을 위한 최고의 정부지원 자금
+            </p>
+            <p className={styles.contents_main_title_text}>
+              2026 소상공인
+            </p>
+            <p className={styles.contents_budget_text}>
+              지원예산 5.4조원!
+            </p>
+          </div>
+          <div className={styles.header_images_wrapper}>
             <img
-              src="/left_coin.png"
-              alt="left coin"
-              className={`${styles.left_coin} ${coinsLoaded ? styles.coin_loaded : ''}`}
-              onLoad={() => {
-                const leftImg = document.querySelector(`.${styles.left_coin}`) as HTMLImageElement;
-                const rightImg = document.querySelector(`.${styles.right_coin}`) as HTMLImageElement;
-                if (leftImg?.complete && rightImg?.complete) {
-                  requestAnimationFrame(() => {
-                    setCoinsLoaded(true);
-                  });
-                }
-              }}
+              ref={headerImage1Ref}
+              src="/header_001.png"
+              alt="header 1"
+              className={styles.header_image}
             />
             <img
-              src="/right_coin.png"
-              alt="right coin"
-              className={`${styles.right_coin} ${coinsLoaded ? styles.coin_loaded : ''}`}
-              onLoad={() => {
-                const leftImg = document.querySelector(`.${styles.left_coin}`) as HTMLImageElement;
-                const rightImg = document.querySelector(`.${styles.right_coin}`) as HTMLImageElement;
-                if (leftImg?.complete && rightImg?.complete) {
-                  requestAnimationFrame(() => {
-                    setCoinsLoaded(true);
-                  });
-                }
-              }}
+              ref={headerImage2Ref}
+              src="/header_002.png"
+              alt="header 2"
+              className={styles.header_image}
             />
-          </>
-        )}
-      </div>
-      <div ref={contentsSectionRef} className={styles.contents_section}>
-        <img
-          src="/contents_001.png"
-          alt="contents"
-          className={styles.contents_image}
-        />
-      </div>
+            <img
+              ref={headerImage3Ref}
+              src="/header_003.png"
+              alt="header 3"
+              className={styles.header_image}
+            />
+          </div>
+          <div className={styles.header_question_wrapper}>
+            <p className={styles.header_question_text}>
+              근데 왜?
+            </p>
+            <p className={styles.header_question_text}>
+              많은 대표님들이 못받을까요?
+            </p>
+          </div>
+        </div>
 
-      <div className={styles.contents_section_blue}>
-        <div className={styles.contents_header_wrapper}>
-        <p className={styles.contents_header_text}>쌓인 부채보다</p>
-        <p className={styles.contents_header_text}>
-          문제는 <span className={styles.contents_header_highlight}>정리가 안된 상태</span>
-        </p>
-        </div>
-        <div className={styles.contents_cards}>
-          <img 
-            ref={contentsCard1Ref}
-            src="/contents_002.png" 
-            alt="금리가 몇%인지 정확히 모른채 유지" 
-            className={styles.contents_card}
-          />
-          <img 
-            ref={contentsCard2Ref}
-            src="/contents_003.png" 
-            alt="바꿀 수 있는 건지 아닌지조차 애매함" 
-            className={styles.contents_card}
-          />
-          <img 
-            ref={contentsCard3Ref}
-            src="/contents_004.png" 
-            alt="정책자금은 들어봤지만 나랑 상관없는 것 같음" 
-            className={styles.contents_card}
-          />
-        </div>
-        <div className={styles.contents_footer_text}>
-          <p className={styles.contents_footer_line1}>이 상태로 오래 가면,</p>
-          <p className={styles.contents_footer_line2}>
-            <span className={styles.contents_footer_bold}>불필요한 이자 전부</span> 내시게 됩니다.
-          </p>
+        <div ref={contentsSectionRef} className={styles.contents_section}>
+          <img src="/contents_001.png" alt="contents" className={styles.contents_image} />
         </div>
       </div>
+      <div ref={infomationSectionRef} className={styles.infomation_section}>
+          <img src="/contents_002.png" alt="contents" className={styles.contents_image} />
+        </div>
+
+    
       <div className={styles.check_section}>
         <div className={styles.check_background}></div>
         <div className={styles.check_content_wrapper}>
-          <p className={styles.check_text}>아래 중 하나라도 해당되신다면,</p>
-          <div className={styles.check_button}>충분히 확인하실만 합니다!</div>
+          <p className={styles.check_text}>아래 해당하시는 분들은 상담이 어렵습니다</p>
+          <div className={styles.check_button}>상담 전 필수 체크리스트</div>
           <div className={styles.check_images}>
             <img 
               ref={checkImage1Ref}
@@ -541,150 +484,130 @@ export default function Home() {
               alt="은행 설명이 어려워 질문을 포기한 적이 있다" 
               className={styles.check_image}
             />
-            <img 
-              ref={checkImage4Ref}
-              src="/check_004.png" 
-              alt="누가 옆에서 쉽게 정리해줬으면 좋겠다" 
-              className={styles.check_image}
-            />
+  
           </div>
         </div>
       </div>
 
       <div ref={content005SectionRef} className={styles.contents_section}>
         <img
-          src="/content_005.png"
+          src="/contents_003.png"
           alt="contents"
           className={styles.contents_image}
         />
       </div>
-      <div ref={consultSectionRef} className={styles.contents_section}>
+      <div ref={contents004SectionRef} className={styles.contents_section}>
         <img
-          src="/consult.png"
+          src="/contents_004.png"
           alt="contents"
           className={styles.contents_image}
         />
       </div>
 
-      <div ref={newSectionRef} className={styles.new_section}>
-        <div className={styles.star_image}></div>
-        <p className={styles.review_text}>
-          한평생 바로기업은 결과로 보여드립니다.
+     <div ref={consultSectionRef} className={styles.consult_section}>
+       <p className={styles.consult_text_white}>
+         다 알려드리지만 너무 바쁘셔서
+         <br />
+       <span className={styles.consult_text_yellow}>
+       직접 신청이 어려우신 대표님이라면?
+       </span>
+       </p>
+       <div className={styles.consult_images_wrapper}>
+         <img
+           ref={consultImage1Ref}
+           src="/consult_002.png"
+           alt="consult 2"
+           className={styles.consult_image}
+         />
+         <img
+           ref={consultImage2Ref}
+           src="/consult_003.png"
+           alt="consult 3"
+           className={styles.consult_image}
+         />
+       </div>
+   
+       <p className={styles.consult_info_text}>
+         정책자금 자문 컨설팅은 <span className={styles.consult_info_bold}>전문가의 기업진단</span> 후
+         <br />
+         필요하다고 판단 시 신청 가능합니다.
+       </p>
+     </div>
+
+    <div className={styles.donworry_section}>
+      <div className={styles.donworry_text_wrapper}>
+        <div className={styles.donworry_button}>
+          손쉬운 자금 마련,
+        </div>
+        <p className={styles.donworry_title}>
+          더이상 혼자 고민하지 마세요!
         </p>
-        <h2 className={styles.review_title}>실제 대표님들의 후기</h2>
-        <Swiper
-          modules={[Navigation, Pagination]}
-          spaceBetween={20}
-          slidesPerView={1.2}
-          centeredSlides={true}
-          navigation
-          pagination={{ clickable: true }}
-          className={styles.reviews_scroll}
-          breakpoints={{
-            375: {
-              slidesPerView: "auto",
-              spaceBetween: 0,
-              centeredSlides: true,
-            },
-            480: {
-              slidesPerView: "auto",
-              spaceBetween: 10,
-              centeredSlides: true,
-            },
-            768: {
-              slidesPerView: "auto",
-              spaceBetween: 16,
-              centeredSlides: false,
-            },
-            1024: {
-              slidesPerView: "auto",
-              spaceBetween: 20,
-              centeredSlides: false,
-            },
-            1280: {
-              slidesPerView: "auto",
-              spaceBetween: 24,
-              centeredSlides: false,
-            },
-            1920: {
-              slidesPerView: "auto",
-              spaceBetween: 70,
-              centeredSlides: false,
-            },
-          }}
-        >
-          <SwiperSlide>
-            <div ref={reviewImage1Ref} className={styles.review_container}>
-              <img
-                src="/review_01.png"
-                alt="review 01"
-                className={styles.review_item}
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div ref={reviewImage2Ref} className={styles.review_container}>
-              <img
-                src="/review_02.png"
-                alt="review 02"
-                className={styles.review_item}
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div ref={reviewImage3Ref} className={styles.review_container}>
-              <img
-                src="/review_03.png"
-                alt="review 03"
-                className={styles.review_item}
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div ref={reviewImage4Ref} className={styles.review_container}>
-              <img
-                src="/review_04.png"
-                alt="review 04"
-                className={styles.review_item}
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div ref={reviewImage4Ref} className={styles.review_container}>
-              <img
-                src="/review_05.png"
-                alt="review 05"
-                className={styles.review_item}
-              />
-            </div>
-          </SwiperSlide>
-        </Swiper>
       </div>
+      <div className={styles.donworry_images_wrapper}>
+        <img
+          ref={donworryImage1Ref}
+          src="/donworry_002.png"
+          alt="donworry 2"
+          className={styles.donworry_image}
+        />
+        <img
+          ref={donworryImage2Ref}
+          src="/donworry_003.png"
+          alt="donworry 3"
+          className={styles.donworry_image}
+        />
+        <img
+          ref={donworryImage3Ref}
+          src="/donworry_004.png"
+          alt="donworry 4"
+          className={styles.donworry_image}
+        />
+      </div>
+      <div className={styles.donworry_focus_wrapper}>
+        <img
+          src="/donworry_005.png"
+          alt="thumbs up"
+          className={styles.donworry_thumbs_image}
+        />
+        <p className={styles.donworry_focus_text}>
+          대표님은 <span className={styles.donworry_focus_highlight}>사업에만 집중</span>하세요
+        </p>
+        <p className={styles.donworry_focus_subtext}>
+          정확한 진단으로 우리 회사가 받을 수 있는
+          <br />
+          정책자금 더 이상 놓치지 마세요!
+        </p>
+      </div>
+    </div>
       <footer ref={footerRef} className={styles.footer}>
         <div className={styles.summary_wrapper}>
-          <h2 className={styles.summary_text}>
-            지금 당장 바꾸실 필요는 없습니다.
-          </h2>
-          <h2 className={styles.summary_title}>
-          그대로 가도 되는지만
-            
-            <span className={styles.summary_title_bold}>
-            &nbsp;한 번쯤<br/>편하게 확인
-            </span>
-            받아보세요
-          </h2>
+          <div className={styles.summary_text_wrapper_new}>
+            <div className={styles.summary_badge}>
+              10초면 신청가능한
+            </div>
+            <p className={styles.summary_title_new}>
+              <span className={styles.summary_title_yellow}>1:1 맞춤 정책자금              <span className={styles.summary_title_white}>기업진단!</span> </span>
+            </p>
+            <p className={styles.summary_description}>
+              이미 많은 기업들이 저희와 함께하고 계십니다.
+            </p>
+          </div>
+          
         </div>
+        <p ref={footerSubtitleRef} className={styles.footer_subtitle}>
+          이젠, <span className={styles.footer_subtitle_bold}>대표님 차례</span>입니다.
+        </p>
         <button
           className={styles.footer_button}
-          onClick={() => handleOpenModal("40~50대여성-랜딩페이지")}
+          onClick={() => handleOpenModal("소상공인-랜딩페이지")}
         >
-          내 자금상황 괜찮은지 확인하기
+          컨설팅 무료 상담신청
         </button>
       </footer>
       {showFloatingBanner && (
         <div className={styles.floating_banner}>
           <button onClick={scrollToFooter} className={styles.floating_button}>
-          내 자금상황 괜찮은지 확인하기
+          컨설팅 무료 상담신청
           </button>
         </div>
       )}
