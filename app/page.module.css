@@ -250,8 +250,8 @@
   position: relative;
   /* 파란색 섹션이 뾰족한 배경 이미지보다 뒤로 가게 설정 */
   z-index: -1; 
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(30px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
@@ -1618,7 +1618,7 @@
 
   
   .contents_section {
-    margin-top: -40px !important;
+    
     z-index: -1;
   }
   
