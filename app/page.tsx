@@ -190,16 +190,17 @@ export default function Home() {
     materialId: string | null
   ): string => {
     const sourceMap: { [key: string]: string } = {
-      daangn: "당근마켓",
-      insta: "인스타그램",
+      daangn: "당근",
+      insta: "인스타",
     };
 
-    const koreanSource = sourceMap[utmSource] || utmSource;
+    const shortSource = sourceMap[utmSource] || utmSource;
+    const homepageName = "소상공인";
 
     if (materialId) {
-      return `${koreanSource}_소재_${materialId}`;
+      return `${homepageName}_${shortSource}_소재_${materialId}`;
     }
-    return koreanSource;
+    return `${homepageName}_${shortSource}`;
   };
 
   // check.gif 이미지 미리 로드 (신청 완료 모달이 즉시 표시되도록)
